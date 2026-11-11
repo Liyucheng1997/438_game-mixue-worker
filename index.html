@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>蜜雪冰城打工模拟器</title>
+  <link rel="stylesheet" href="/src/tokens.css" />
+  <link rel="stylesheet" href="/src/game.css" />
+</head>
+<body>
+  <canvas id="c"></canvas>
+  <div id="labels"></div>
+  <div id="tickets"></div>
+  <div id="floats"></div>
+  <div id="danmaku"></div>
+  <div id="hud" hidden>
+    <div class="hud-top">
+      <div class="card stat"><span class="k" id="h-day">第 1 天</span><b class="tabular" id="h-clock">10:00</b></div>
+      <div class="card stat kpi">
+        <span class="k">营业额（老板的）</span>
+        <b class="tabular"><span id="h-rev">¥0</span><em id="h-target"> / ¥40</em></b>
+        <div class="bar"><i id="h-kpibar"></i></div>
+      </div>
+      <div class="card stat"><span class="k">到手（你的）</span><b class="tabular" id="h-money">¥0</b></div>
+      <div class="card stat"><span class="k">店铺评分</span><b class="tabular" id="h-stars">3.5</b><div class="bar"><i id="h-starbar"></i></div></div>
+      <div class="card stat"><span class="k">门外排队</span><b class="tabular" id="h-queue">0 人</b></div>
+      <div class="spacer"></div>
+      <button class="btn" id="b-recipe">配方表</button>
+      <button class="btn" id="b-hint">师傅带教：开</button>
+      <button class="btn" id="b-sound">声音：开</button>
+    </div>
+    <div class="combo" id="h-combo"></div>
+    <div class="card cupinfo" id="cupinfo"></div>
+    <div class="card recipes" id="recipes" hidden></div>
+    <div class="gauge" id="gauge" hidden><div class="zone" id="g-zone"></div><div class="fill" id="g-fill"></div></div>
+  </div>
+  <div class="toast-host" id="toasts"></div>
+  <div id="screen"></div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

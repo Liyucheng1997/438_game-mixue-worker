@@ -1,0 +1,132 @@
+#c { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+#labels, #tickets, #floats, #danmaku, #hud { position: fixed; inset: 0; pointer-events: none; user-select: none; -webkit-user-select: none; }
+#hud[hidden] { display: none; }
+.card { background: var(--panel); border-radius: var(--r-lg); box-shadow: var(--shadow-card); }
+
+/* 顶栏 */
+.hud-top { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; }
+.hud-top > * { pointer-events: auto; }
+.hud-top .spacer { flex: 1; pointer-events: none; }
+.hud-top .btn { align-self: center; background: var(--panel); box-shadow: var(--shadow-card); }
+.hud-top .btn:hover { background: var(--panel-2); }
+.stat { padding: 8px 14px; border-radius: 14px; display: flex; flex-direction: column; gap: 1px; min-width: 84px; }
+.stat .k { font-size: 11px; color: var(--text-3); }
+.stat b { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+.stat em { font-style: normal; font-weight: 500; font-size: 12px; color: var(--text-3); }
+.kpi { min-width: 150px; }
+.bar { height: 4px; border-radius: 4px; background: var(--fill); overflow: hidden; margin-top: 3px; }
+.bar i { display: block; height: 100%; width: 0; background: var(--primary); border-radius: 4px; transition: width 0.3s var(--ease-out), background 0.3s; }
+.bar i.ok { background: var(--success); }
+.bar i.warn { background: var(--warning); }
+.bar i.bad { background: var(--danger); }
+.combo { position: absolute; top: 76px; left: 50%; transform: translateX(-50%); font-size: 15px; font-weight: 600; color: var(--primary); background: var(--panel); border-radius: 99px; padding: 6px 16px; box-shadow: var(--shadow-card); opacity: 0; transition: opacity 0.2s, scale 0.3s var(--spring); }
+.combo.on { opacity: 1; scale: 1.05; }
+
+/* 当前杯 */
+.cupinfo { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); padding: 8px 10px 8px 16px; border-radius: 99px; display: flex; align-items: center; gap: 6px; pointer-events: auto; max-width: calc(100vw - 24px); flex-wrap: wrap; justify-content: center; min-height: 44px; }
+.cupinfo .t { font-weight: 600; margin-right: 2px; }
+.cupinfo .hint { color: var(--text-3); padding-right: 8px; }
+.tag { display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 99px; background: var(--fill); font-size: 12px; font-weight: 500; color: var(--text-2); white-space: nowrap; }
+.tag i { width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12); }
+.tag.on { background: var(--primary-soft); color: var(--primary); }
+
+/* 设备标签 */
+.slabel { position: absolute; left: 0; top: 0; pointer-events: auto; border: 0; height: 24px; padding: 0 10px; border-radius: 99px; background: var(--panel); color: var(--text); font-size: 12px; font-weight: 500; box-shadow: var(--shadow-card); white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; transition: background 0.15s, color 0.15s, scale 0.25s var(--spring); will-change: transform; }
+.slabel:hover, .slabel.hover { background: var(--primary-soft); color: var(--primary); scale: 1.08; }
+.slabel.need { background: var(--primary); color: #fff; animation: pulse 1s ease-in-out infinite; }
+.slabel .n { font-variant-numeric: tabular-nums; background: rgba(255, 255, 255, 0.25); border-radius: 99px; padding: 0 6px; font-size: 11px; }
+.slabel[hidden] { display: none; }
+@keyframes pulse { 50% { scale: 1.12; } }
+
+/* 小票 */
+.ticket { position: absolute; left: 0; top: 0; width: 176px; background: var(--panel); border-radius: 16px; box-shadow: var(--shadow-lift); padding: 10px 12px; pointer-events: auto; cursor: pointer; transition: box-shadow 0.2s, scale 0.25s var(--spring); will-change: transform; }
+.ticket:hover { scale: 1.03; }
+.ticket.target { box-shadow: 0 0 0 2px var(--primary), var(--shadow-lift); }
+.ticket.shake { animation: shake 0.5s; }
+@keyframes shake { 20% { rotate: -4deg; } 40% { rotate: 4deg; } 60% { rotate: -3deg; } 80% { rotate: 2deg; } }
+.ticket .who { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-3); margin-bottom: 4px; }
+.ticket .who .key { margin-left: auto; width: 18px; height: 18px; border-radius: 6px; background: var(--fill); color: var(--text-2); display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 11px; }
+.ticket .say { font-size: 12px; color: var(--text-2); line-height: 1.45; margin-bottom: 6px; }
+.ticket .item { padding: 6px 0 2px; border-top: 1px solid var(--line); }
+.ticket .item.done { opacity: 0.4; text-decoration: line-through; }
+.ticket .name { font-size: 14px; font-weight: 600; letter-spacing: -0.02em; display: flex; justify-content: space-between; gap: 6px; }
+.ticket .name span { font-weight: 500; color: var(--text-3); font-size: 12px; }
+.ticket .opts { display: flex; gap: 4px; margin: 4px 0 2px; flex-wrap: wrap; }
+.ticket .opts .tag { height: 20px; padding: 0 8px; font-size: 11px; }
+.ticket .rec { font-size: 11px; color: var(--text-3); line-height: 1.5; }
+.ticket .ask { margin-top: 6px; width: 100%; }
+.ticket .bar { margin-top: 8px; }
+
+/* 飘字 / 弹幕 */
+.float { position: absolute; left: 0; top: 0; font-size: 15px; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; padding: 4px 12px; border-radius: 99px; background: var(--panel); box-shadow: var(--shadow-lift); animation: floatUp 1.6s var(--ease-out) forwards; }
+.float.good { color: var(--success); }
+.float.bad { color: var(--danger); }
+.float.info { color: var(--primary); }
+@keyframes floatUp { from { opacity: 0; translate: -50% 0; scale: 0.7; } 15% { opacity: 1; scale: 1.05; } 70% { opacity: 1; } to { opacity: 0; translate: -50% -70px; } }
+.dm { position: absolute; left: 100%; white-space: nowrap; font-size: 15px; font-weight: 600; color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65); animation: dm 7s linear forwards; }
+@keyframes dm { to { transform: translateX(calc(-100vw - 100%)); } }
+.live { position: absolute; left: 12px; top: 84px; padding: 6px 12px; border-radius: 99px; background: var(--panel); box-shadow: var(--shadow-card); font-weight: 600; font-size: 12px; display: flex; align-items: center; gap: 6px; }
+.live::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--danger); animation: blink 1s infinite; }
+@keyframes blink { 50% { opacity: 0.2; } }
+
+/* 冰淇淋量表 */
+.gauge { position: absolute; left: 0; top: 0; width: 22px; height: 150px; border-radius: 99px; background: var(--panel); box-shadow: var(--shadow-lift); overflow: hidden; }
+.gauge[hidden] { display: none; }
+.gauge .zone { position: absolute; left: 0; right: 0; background: var(--success-bg); border-top: 2px solid var(--success); border-bottom: 2px solid var(--success); }
+.gauge .fill { position: absolute; left: 5px; right: 5px; bottom: 4px; border-radius: 99px; background: var(--primary); }
+.gauge .fill.ok { background: var(--success); }
+.gauge .fill.over { background: var(--danger); }
+
+/* 配方表 */
+.recipes { position: absolute; right: 12px; top: 72px; width: 300px; max-height: calc(100vh - 150px); overflow: auto; padding: 14px 16px; pointer-events: auto; animation: riseIn 0.25s var(--ease-out); }
+.recipes[hidden] { display: none; }
+.recipes h3 { margin: 0 0 8px; font-size: 16px; font-weight: 600; letter-spacing: -0.02em; }
+.recipes .r { padding: 8px 0; border-top: 1px solid var(--line); }
+.recipes .r b { font-weight: 600; font-size: 13px; }
+.recipes .r span { color: var(--text-3); font-size: 12px; float: right; }
+.recipes .r p { margin: 3px 0 0; color: var(--text-2); font-size: 12px; line-height: 1.5; }
+.recipes .tip { color: var(--text-3); font-size: 11.5px; line-height: 1.6; margin-top: 8px; }
+
+/* 全屏面板 */
+#screen:empty { display: none; }
+.panel { width: 540px; padding: 28px 28px 24px; overflow: auto; }
+.panel h1 { margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.03em; }
+.panel h2 { margin: 0 0 4px; font-size: 22px; font-weight: 600; letter-spacing: -0.03em; }
+.panel .sub { color: var(--text-2); font-size: 14px; line-height: 1.6; margin: 6px 0 16px; }
+.panel .fine { color: var(--text-3); font-size: 11.5px; line-height: 1.6; margin-top: 14px; }
+.panel .actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+.panel .actions .btn { height: 40px; padding: 0 24px; font-size: 14px; }
+.how { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.how div { background: var(--panel-2); border-radius: var(--r); padding: 10px 12px; font-size: 12.5px; line-height: 1.55; color: var(--text-2); }
+.how b { display: block; color: var(--text); font-weight: 600; margin-bottom: 2px; }
+.rows { display: flex; flex-direction: column; }
+.rows .row { display: flex; justify-content: space-between; padding: 8px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.rows .row:first-child { border-top: 0; }
+.rows .row b { font-weight: 600; font-variant-numeric: tabular-nums; }
+.rows .row.total { font-size: 16px; }
+.pos { color: var(--success); }
+.neg { color: var(--danger); }
+.quote { background: var(--panel-2); border-radius: var(--r); padding: 12px 14px; font-size: 13px; line-height: 1.6; color: var(--text-2); margin: 12px 0 0; }
+.quote b { color: var(--text); font-weight: 600; }
+.ups { display: flex; flex-direction: column; gap: 8px; max-height: 46vh; overflow: auto; }
+.up { display: flex; align-items: center; gap: 12px; background: var(--panel-2); border-radius: var(--r); padding: 10px 12px 10px 14px; }
+.up .info { flex: 1; min-width: 0; }
+.up .info b { font-weight: 600; font-size: 14px; }
+.up .info p { margin: 2px 0 0; color: var(--text-2); font-size: 12px; line-height: 1.5; }
+.up .lv { color: var(--text-3); font-size: 11px; margin-left: 6px; font-weight: 500; }
+.btn[disabled] { opacity: 0.4; pointer-events: none; }
+.newbox { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.choice .actions { flex-direction: column; }
+.choice .actions .btn { justify-content: flex-start; height: auto; min-height: 40px; padding: 8px 18px; text-align: left; border-radius: 14px; }
+
+@media (max-width: 760px) {
+  .stat { padding: 6px 10px; min-width: 0; }
+  .stat b { font-size: 14px; }
+  .kpi { min-width: 110px; }
+  .hud-top .spacer { display: none; }
+  .ticket { width: 138px; padding: 8px 9px; }
+  .slabel { height: 20px; padding: 0 7px; font-size: 10.5px; }
+  .panel { width: calc(100vw - 24px); padding: 20px; }
+  .how { grid-template-columns: 1fr; }
+  .recipes { width: calc(100vw - 24px); top: 120px; }
+}
